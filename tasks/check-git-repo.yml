@@ -1,18 +1,14 @@
 ---
-- name: Set ansible directory fact
-  ansible.builtin.set_fact:
-    _sanity_check_ansible_git_repo_dir: "{{ ansible_config_file | dirname }}"
-
 - name: Check for .git directory in ansible playbook directory
   ansible.builtin.stat:
-    path: "{{ _sanity_check_ansible_git_repo_dir }}/.git"
+    path: "{{ sanity_check_ansible_playbook_dir }}/.git"
   register: _sanity_check_git_dir
 
 - name: Check if ansible playbook directory is checked out from git
   ansible.builtin.assert:
     that: _sanity_check_git_dir.stat.exists
     fail_msg: >-
-      The ansible playbook directory {{ _sanity_check_ansible_git_repo_dir }}
+      The ansible playbook directory {{ sanity_check_ansible_playbook_dir }}
       isn't checked out from git
     success_msg: "The ansible playbook directory is checked out from git"
 

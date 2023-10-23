@@ -1,0 +1,53 @@
+---
+argument_specs:
+  main:
+    short_description: Perform sanity checks before running playbooks
+    description: |
+      Perform sanity checks against the host environment where
+      the ansible playbook is being run and abandon if any issues are found.
+      Checks include:
+      ansible version, required python modules are installed,
+      ansible playbook directory is checked out from the right git branch
+      and there are no local changes in the git working tree.
+    options:
+      sanity_check_minimum_ansible_version:
+        description: Minimum ansible version required to run the playbooks
+        type: str
+        default: 2.12.0
+
+      sanity_check_python_modules:
+        description: Python modules required to run the playbooks
+        type: list
+        elements: dict
+        options:
+          name:
+            description: Python module name
+            type: str
+            required: true
+          apt_package:
+            description: Apt package which provides the python module
+            type: str
+            required: true
+        default:
+          - name: passlib
+            apt_package: python3-passlib
+          - name: jmespath
+            apt_package: python3-jmespath
+          - name: netaddr
+            apt_package: python3-netaddr
+
+      sanity_check_git_repo:
+        description: >-
+          If true, run git repo sanity checks against ansible playbook directory
+        type: bool
+        default: true
+
+      sanity_check_ansible_playbook_dir:
+        description: Path to ansible playbook directory
+        type: str
+        default: "{{ ansible_config_file | dirname }}"
+
+      sanity_check_git_branch:
+        description: Name of the git branch that ansible playbooks should be run from
+        type: str
+        default: main
