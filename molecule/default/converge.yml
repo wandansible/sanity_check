@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include wandansible.sanity_check"
+      ansible.builtin.include_role:
+        name: "wandansible.sanity_check"
+      vars:
+        sanity_check_ansible_playbook_dir: "{{ lookup('ansible.builtin.env', 'GITHUB_WORKSPACE') }}"
+        sanity_check_git_branch: "HEAD"

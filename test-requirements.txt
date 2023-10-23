@@ -1,0 +1,6 @@
+ansible
+jmespath
+passlib
+netaddr
+molecule
+molecule-plugins[docker]
