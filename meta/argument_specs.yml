@@ -37,7 +37,7 @@ argument_specs:
             apt_package: python3-netaddr
 
       sanity_check_git_repo:
-        description: >-
+        description: |
           If true, run git repo sanity checks against ansible playbook directory
         type: bool
         default: true
