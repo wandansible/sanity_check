@@ -10,4 +10,5 @@ sanity_check_python_modules:
     apt_package: python3-netaddr
 
 sanity_check_git_repo: true
+sanity_check_ansible_playbook_dir: "{{ ansible_config_file | dirname }}"
 sanity_check_git_branch: main
