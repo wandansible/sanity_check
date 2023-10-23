@@ -1,0 +1,13 @@
+---
+sanity_check_minimum_ansible_version: "2.12.0"
+
+sanity_check_python_modules:
+  - name: passlib
+    apt_package: python3-passlib
+  - name: jmespath
+    apt_package: python3-jmespath
+  - name: netaddr
+    apt_package: python3-netaddr
+
+sanity_check_git_repo: true
+sanity_check_git_branch: main

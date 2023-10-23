@@ -1,0 +1,15 @@
+---
+- name: Check if python module is importable
+  ansible.builtin.command:
+    cmd: "{{ ansible_playbook_python }} -c 'import {{ item.name }}'"
+  changed_when: false
+  failed_when: false
+  register: _sanity_check_python_lib_installed
+
+- name: Check required python module is installed
+  ansible.builtin.assert:
+    that: _sanity_check_python_lib_installed.rc == 0
+    fail_msg: >-
+      Python module {{ item.name }} needs to be installed,
+      try installing the {{ item.apt_package }} apt package
+    success_msg: "Python module {{ item.name }} is installed"

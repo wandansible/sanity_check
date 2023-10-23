@@ -1,0 +1,8 @@
+---
+- name: Check ansible version
+  ansible.builtin.assert:
+    that: ansible_version.full is version(sanity_check_minimum_ansible_version, ">=")
+    fail_msg: >-
+      Ansible version {{ ansible_version.full }} found, please upgrade
+      to {{ sanity_check_minimum_ansible_version }} or newer
+    success_msg: "Ansible {{ ansible_version.full }} found"

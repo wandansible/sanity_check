@@ -1,0 +1,17 @@
+---
+- name: Run sanity checks on local machine running ansible
+  delegate_to: localhost
+  become: false
+  block:
+    - name: Run ansible sanity checks
+      ansible.builtin.import_tasks: check-ansible.yml
+
+    - name: Run python module sanity checks
+      ansible.builtin.include_tasks: check-python-module.yml
+      loop: "{{ sanity_check_python_modules }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Run git repo sanity checks
+      ansible.builtin.include_tasks: check-git-repo.yml
+      when: sanity_check_git_repo
