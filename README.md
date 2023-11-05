@@ -1,5 +1,5 @@
 Ansible role: sanity\_check
-==========================
+===========================
 
 Perform sanity checks against the host environment where the
 ansible playbook is being run and abandon if any issues are found.
