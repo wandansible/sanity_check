@@ -1,0 +1,37 @@
+---
+- name: Get current hostname
+  ansible.builtin.command:
+    cmd: "hostname"
+  register: _hostname_cmd
+  changed_when: false
+
+- name: Check hostname
+  ansible.builtin.assert:
+    that: _hostname_cmd.stdout in inventory_hostname
+    fail_msg: >-
+      The current hostname {{ _hostname_cmd.stdout }} does not match
+      {{ inventory_hostname }} ({{ ansible_host }})
+    success_msg: "Current hostname is {{ _hostname_cmd.stdout }}"
+  register: _sanity_check_hostname
+  failed_when: false
+  changed_when: >-
+    "evaluated_to" in _sanity_check_hostname
+
+- name: Ask user if they want to continue after failed hostname sanity check
+  ansible.builtin.pause:
+    prompt: >-
+      The current hostname on the machine does not match the hostname in the ansible inventory,
+      do you wish to continue with the play? (y/n)
+  register: _sanity_check_hostname_continue
+  when: _sanity_check_hostname.changed
+
+- name: Check user response to see if we should continue or not
+  ansible.builtin.assert:
+    that: >-
+      _sanity_check_hostname_continue.user_input | bool
+      or _sanity_check_hostname_continue.user_input == "y"
+    fail_msg: >-
+      User response "{{ _sanity_check_hostname_continue.user_input }}" is not "yes"
+    success_msg: "Hostname sanity check overriden"
+  when: >-
+    "user_input" in _sanity_check_hostname_continue

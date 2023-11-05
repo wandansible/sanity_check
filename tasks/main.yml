@@ -15,3 +15,8 @@
     - name: Run git repo sanity checks
       ansible.builtin.include_tasks: check-git-repo.yml
       when: sanity_check_git_repo
+
+- name: Run sanity checks on remote machine
+  block:
+    - name: Run hostname sanity checks
+      ansible.builtin.import_tasks: check-hostname.yml
