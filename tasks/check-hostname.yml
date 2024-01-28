@@ -21,7 +21,7 @@
   ansible.builtin.pause:
     prompt: >-
       The current hostname on the machine does not match the hostname in the ansible inventory,
-      do you wish to continue with the play? (y/n)
+      do you wish to continue with the play? (yes/no)
   register: _sanity_check_hostname_continue
   when: _sanity_check_hostname.changed
 
@@ -29,7 +29,7 @@
   ansible.builtin.assert:
     that: >-
       _sanity_check_hostname_continue.user_input | bool
-      or _sanity_check_hostname_continue.user_input == "y"
+      or _sanity_check_hostname_continue.user_input | lower == "y"
     fail_msg: >-
       User response "{{ _sanity_check_hostname_continue.user_input }}" is not "yes"
     success_msg: "Hostname sanity check overriden"

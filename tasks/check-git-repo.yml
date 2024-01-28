@@ -46,7 +46,7 @@
   ansible.builtin.pause:
     prompt: >-
       One or more git repo sanity checks failed,
-      do you wish to continue with the play? (y/n)
+      do you wish to continue with the play? (yes/no)
   register: _sanity_check_git_repo_continue
   when: _sanity_check_git_branch.changed or _sanity_check_dirty_git_tree.changed
 
@@ -54,7 +54,7 @@
   ansible.builtin.assert:
     that: >-
       _sanity_check_git_repo_continue.user_input | bool
-      or _sanity_check_git_repo_continue.user_input == "y"
+      or _sanity_check_git_repo_continue.user_input | lower == "y"
     fail_msg: >-
       User response "{{ _sanity_check_git_repo_continue.user_input }}" is not "yes"
     success_msg: "Git repo sanity check overriden"
