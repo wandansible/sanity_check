@@ -11,6 +11,12 @@ Checks include:
   * Ansible playbook directory is checked out from the right git branch
     and there are no local changes in the git working tree.
 
+Requirements
+------------
+
+To use this role, the python packages `netaddr`, `jmespath` and `passlib`
+must be installed on the host running ansible.
+
 Role Variables
 --------------
 
