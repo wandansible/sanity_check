@@ -24,15 +24,13 @@ jobs:
     strategy:
       matrix:
         target: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-        exclude:
-          - target: debian:buster
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - name: Install dependencies
         run: pip3 install -r requirements.txt
       - name: Install test dependencies
