@@ -95,5 +95,4 @@ Example Playbook
       roles:
         - role: wandansible.sanity_check
       gather_facts: false
-      run_once: true
       become: false
