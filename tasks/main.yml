@@ -1,5 +1,6 @@
 ---
 - name: Run sanity checks on local machine running ansible
+  run_once: true
   delegate_to: localhost
   become: false
   block:
