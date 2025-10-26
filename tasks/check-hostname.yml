@@ -27,7 +27,7 @@
   when: >-
     hostvars
     | dict2items
-    | selectattr('key', 'in', play_hosts)
+    | selectattr('key', 'in', ansible_play_batch)
     | map(attribute='value._sanity_check_hostname')
     | selectattr('changed')
     | length >= 1
