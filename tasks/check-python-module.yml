@@ -5,6 +5,7 @@
   changed_when: false
   failed_when: false
   register: _sanity_check_python_lib_installed
+  check_mode: false
 
 - name: Check required python module is installed
   ansible.builtin.assert:
