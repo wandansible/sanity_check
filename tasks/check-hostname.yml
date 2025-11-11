@@ -4,6 +4,7 @@
     cmd: "hostname"
   register: _hostname_cmd
   changed_when: false
+  check_mode: false
 
 - name: Check hostname
   ansible.builtin.assert:
